@@ -1,0 +1,52 @@
+[
+    {
+        "has_meal": true,
+        "meal": [
+            "Vogien",
+            "Kanafilee"
+        ],
+        "has_text": false,
+        "text": ""
+    },
+    {
+        "has_meal": true,
+        "meal": [
+            "Vogien",
+            "Kanafilee"
+        ],
+        "has_text": false,
+        "text": ""
+    },
+    {
+        "has_meal": true,
+        "meal": [
+            "Vogien",
+            "Kanafilee"
+        ],
+        "has_text": false,
+        "text": ""
+    },
+    {
+        "has_meal": true,
+        "meal": [
+            "Vogien",
+            "Kanafilee"
+        ],
+        "has_text": false,
+        "text": ""
+    },
+    {
+        "has_meal": true,
+        "meal": [
+            "Vogien",
+            "Kanafilee"
+        ],
+        "has_text": false,
+        "text": ""
+    },
+    {
+        "has_meal": false,
+        "has_text": true,
+        "text": "Samedi, jamais de plats mais peut avoir des textes"
+    }
+]
