@@ -6,6 +6,7 @@
             "content": [
                 {
                     "text": "Vosgien",
+                    "img": "Vosgien",
                     "is_meal": true
                 },
                 {
@@ -19,10 +20,12 @@
             "content": [
                 {
                     "text": "Vosgien",
+                    "img": "Vosgien",
                     "is_meal": true
                 },
                 {
                     "text": "cake chèvre pesto",
+                    "img": "cake chèvre pesto",
                     "is_meal": true
                 }
             ]
@@ -32,10 +35,12 @@
             "content": [
                 {
                     "text": "BainDeFraicheur",
+                    "img": "BainDeFraicheur",
                     "is_meal": true
                 },
                 {
                     "text": "cake chèvre pesto",
+                    "img": "cake chèvre pesto",
                     "is_meal": true
                 }
             ]
@@ -45,10 +50,12 @@
             "content": [
                 {
                     "text": "BainDeFraicheur",
+                    "img": "BainDeFraicheur",
                     "is_meal": true
                 },
                 {
                     "text": "Vosgien",
+                    "img": "Vosgien",
                     "is_meal": true
                 }
             ]
@@ -57,7 +64,8 @@
             "day": "Vendredi",
             "content": [
                 {
-                    "text": "Vosgien",
+                    "text": "Pasta Bolo",
+                    "img": "Pâtes",
                     "is_meal": true
                 },
                 {
