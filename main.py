@@ -1,3 +1,4 @@
+import json
 from PIL import Image, ImageDraw, ImageFont
 from datetime import date, timedelta
 import locale
@@ -77,8 +78,18 @@ def setup_img():
 
     return img
 
+def add_meal(img, meal):
+    pass
+
 def main():
     img = setup_img()
+
+    with open("meal.json") as f:
+        meal = json.load(f)
+
+
+
+    img = add_meal(img, meal)
     img.show()
 
 if __name__ == "__main__":
