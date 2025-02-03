@@ -1,52 +1,80 @@
-[
-    {
-        "has_meal": true,
-        "meal": [
-            "Vogien",
-            "Kanafilee"
-        ],
-        "has_text": false,
-        "text": ""
-    },
-    {
-        "has_meal": true,
-        "meal": [
-            "Vogien",
-            "Kanafilee"
-        ],
-        "has_text": false,
-        "text": ""
-    },
-    {
-        "has_meal": true,
-        "meal": [
-            "Vogien",
-            "Kanafilee"
-        ],
-        "has_text": false,
-        "text": ""
-    },
-    {
-        "has_meal": true,
-        "meal": [
-            "Vogien",
-            "Kanafilee"
-        ],
-        "has_text": false,
-        "text": ""
-    },
-    {
-        "has_meal": true,
-        "meal": [
-            "Vogien",
-            "Kanafilee"
-        ],
-        "has_text": false,
-        "text": ""
-    },
-    {
-        "has_meal": false,
-        "has_text": true,
-        "text": "Samedi, jamais de plats mais peut avoir des textes"
-    }
-]
+{
+    "header": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Pub"],
+    "content": [
+        {
+            "day": "Lundi",
+            "content": [
+                {
+                    "text": "Vosgien",
+                    "is_meal": true
+                },
+                {
+                    "text": "Venez partager un moment de convivialité autour d'un café ou d'un thé",
+                    "is_meal": false
+                }
+            ]
+        },
+        {
+            "day": "Mardi",
+            "content": [
+                {
+                    "text": "Vosgien",
+                    "is_meal": true
+                },
+                {
+                    "text": "cake chèvre pesto",
+                    "is_meal": true
+                }
+            ]
+        },
+        {
+            "day": "Mercredi",
+            "content": [
+                {
+                    "text": "BainDeFraicheur",
+                    "is_meal": true
+                },
+                {
+                    "text": "cake chèvre pesto",
+                    "is_meal": true
+                }
+            ]
+        },
+        {
+            "day": "Jeudi",
+            "content": [
+                {
+                    "text": "BainDeFraicheur",
+                    "is_meal": true
+                },
+                {
+                    "text": "Vosgien",
+                    "is_meal": true
+                }
+            ]
+        },
+        {
+            "day": "Vendredi",
+            "content": [
+                {
+                    "text": "Vosgien",
+                    "is_meal": true
+                },
+                {
+                    "text": "Wow le BDE offre des pizzas",
+                    "is_meal": false
+                }
+            ]
+        },
+        {
+            "day": "Samedi",
+            "no_head": true,
+            "content": [
+                {
+                    "text": "Soirée de l'intégration : venez déguster des plats du monde entier",
+                    "is_meal": false
+                }
+            ]
+        }
+    ]
+}
