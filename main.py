@@ -7,7 +7,7 @@ LOGO = "Barbare.png"
 
 ## Return the date of the next monday and the date of the next friday in the format "Semaine du 01 au 05 mars 2021"
 def next_week():
-    locale.setlocale(locale.LC_TIME, 'fra_fra')  # Set locale to French
+    locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')  # Set locale to French
     today = date.today()
     days_ahead = 7 - today.weekday()
     monday = today + timedelta(days=days_ahead)
