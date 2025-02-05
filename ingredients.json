@@ -1,0 +1,222 @@
+[
+    [
+        "Le Savouayard (végé/veggie)",
+        "fromage à raclette, r\u00f6stis, oignons caramélisés, tomates.",
+        "raclette, potato rostis, caramelized onions, tomatoes."
+    ],
+    [
+        "Le RSAv (végé/veggie)",
+        "r\u00f6sti, raclette, salade, oignons.",
+        "potato rostis, salad, raclette, onions."
+    ],
+    [
+        "L'Athénien (végé/veggie)",
+        "houmous, concombre, féta, tomates, oignons rouges.",
+        "hummus, cucumber, feta, tomatoes, red onions."
+    ],
+    [
+        "Spartiate (végé/veggie)",
+        "houmous, concombre, feta, salade, oignon rouge.",
+        "hummus, cucumber, feta, salad, red onions."
+    ],
+    [
+        "Le Printanier (végé/veggie)",
+        "concombre, tomates, poivron, mozzarella, salade.",
+        "cucumber, tomatoes, pepper, mozzarella, salad."
+    ],
+    [
+        "Le PowerUp (végé/veggie)",
+        "houmous, salade, tomates, champignon.",
+        "hummus, salad, tomatoes, mushrooms."
+    ],
+    [
+        "Le Houmoussaillon (végé/veggie)",
+        "houmous, roquette, tomates, oignons.",
+        "hummus, rocket salad, tomatoes, onions."
+    ],
+    [
+        "Le Ma\u00efté (végé/veggie)",
+        "fromage ail et fines herbes, concombre, tomates, salade.",
+        "garlic and herbs cheese, cucumber, tomatoes, salad."
+    ],
+    [
+        "El Sombrero (végé/veggie)",
+        "guacamole, oignons rouges, tomates, salade.",
+        "guacamole, red onions, tomatoes, salad."
+    ],
+    [
+        "Le Bain de fraîcheur (végé/veggie)",
+        "chèvre, salade, tomates, concombre.",
+        "goat cheese, salad, tomatoes, cucumber."
+    ],
+    [
+        "Chèvre frais (végé/veggie)",
+        "concombre, oignons rouges, chèvre, salade.",
+        "cucumber, red onions, goat cheese, salad."
+    ],
+    [
+        "Le Chèvre",
+        "jambon sec, tomates, fromage de chèvre, salade.",
+        "dry cured ham, tomatoes, goat cheese, salad."
+    ],
+    [
+        "El Mexicano",
+        "chorizo, chèvre, tomates, guacamole.",
+        "chorizo, goat cheese, tomatoes, guacamole."
+    ],
+    [
+        "Le Mozza",
+        "jambon blanc, tomates, mozzarella, salade.",
+        "ham, tomatoes, mozzarella, salad."
+    ],
+    [
+        "L'Italien",
+        "jambon sec, tomates, mozzarella, salade.",
+        "dry cured ham, tomatoes, mozzarella, salad."
+    ],
+    [
+        "Le Parisien",
+        "beurre, jambon blanc, emmental.",
+        "butter, ham, emmental."
+    ],
+    [
+        "Le Red Cold",
+        "pesto rouge, chorizo, cheddar, tomates, poivron.",
+        "red pesto, chorizo, cheddar, tomatoes, pepper."
+    ],
+    [
+        "Le NoName",
+        "jambon cuit, fromage ail et fines herbes, tomates, salade.",
+        "fried ham, garlic and herbs cheese, tomatoes, salad."
+    ],
+    [
+        "Le Thon mayo",
+        "thon, mayonnaise, salade.",
+        "tuna, mayonnaise, salad."
+    ],
+    [
+        "L'Alpin",
+        "steak, fromage à raclette, crème fraîche, salade.",
+        "ground beef, raclette cheese, fresh cream, salad."
+    ],
+    [
+        "Le Lance-Roquette",
+        "steak haché, brie, roquette, oignons caramélisés.",
+        "ground beef, brie cheese, rocket salad, caramelized onions."
+    ],
+    [
+        "Le 25",
+        "viande kebab, tomates, oignons, salade, sauce blanche.",
+        "kebab meat, tomatoes, onions, salad, white sauce."
+    ],
+    [
+        "Le 24",
+        "viande kebab, oignons, salade, sauce blanche.",
+        "kebab meat, onions, salad, white sauce."
+    ],
+    [
+        "Le Rustique",
+        "fromage en tranche, r\u00f6sti, tomates, salade.",
+        "sliced cheese, potato rostis, tomatoes, salad."
+    ],
+    [
+        "Le Vosgien",
+        "lardons, r\u00f6sti, fromage râpé, crème fraîche, salade.",
+        "bacon lardons, potato rostis, grated cheese, fresh cream, salad."
+    ],
+    [
+        "Le Hot Dog",
+        "saucisse, sauces à disposition.",
+        "sausage, sauces at will."
+    ],
+    [
+        "Les pâtes carbo",
+        "pâtes, crème fraîche, lardons, oignons.",
+        "pastas, crème fraîche, bacon lardons, onions."
+    ],
+    [
+        "Pasta al Pomodoro (végé/veggie)",
+        "pâtes, sauce tomate maison.",
+        "pastas, homemade tomato sauce."
+    ],
+    [
+        "Poulet cu-riz",
+        "poulet, riz, curry, crème fraîche, oignons.",
+        "chicken, rice, curry, fresh cream, onions."
+    ],
+    [
+        "Mac'N'Cheese (végé/veggie)",
+        "pâtes, crème fraîche, cheddar.",
+        "pastas, fresh cream, cheddar."
+    ],
+    [
+        "Pasta Bolo",
+        "pâtes, sauce bolognaise.",
+        "pastas, bolognese."
+    ],
+    [
+        "Pasta Pesto",
+        "pâtes, sauce pesto.",
+        "pastas, pesto sauce."
+    ],
+    [
+        "Pate Champi",
+        "pâtes, crème, champignons, ail, persil.",
+        "pastas, cream, mushrooms, garlic, parsley."
+    ],
+    [
+        "Lasagnes",
+        "pâtes à lasagnes, sauce bolognaise, crème liquide, beurre, farine, fromage râpé.",
+        "lasagna dough, Bolognese sauce, grated cheese, liquid cream, butter, flour."
+    ],
+    [
+        "Lasagnes (végé/veggie)",
+        "pâtes à lasagnes, sauce tomate, crème liquide, beurre, farine, fromage râpé.",
+        "lasagna dough, tomato sauce, liquid cream, butter, flour, grated cheese."
+    ],
+    [
+        "Lasagnes Ricotta Epinard (végé/veggie)",
+        "pâtes à lasagnes, épinards, ricotta, crème liquide, beurre, farine.",
+        "lasagna dough, spinach, ricotta, liquid cream, butter, flour."
+    ],
+    [
+        "Quiche",
+        "pâte brisée, crème fraîche, lardons, oeufs.",
+        "shortcrust pastry, crème fraîche, bacon strip, egg."
+    ],
+    [
+        "Quiche (végé/veggie)",
+        "pâte brisée, crème fraîche, champignons, oeufs.",
+        "shortcrust pastry, crème fraîche, mushroom, egg."
+    ],
+    [
+        "Gratin de pâtes",
+        "pâtes, lardons, crème liquide, beurre, farine, fromage râpé.",
+        "pastas, bacon lardons, single cream, butter, flour, grated cheese."
+    ],
+    [
+        "Gratin de pâtes (végé/veggie)",
+        "pâtes, champignons, crème liquide, beurre, farine, fromage râpé.",
+        "pastas, mushrooms, single cream, butter, flour, grated cheese."
+    ],
+    [
+        "Cake Olive Jambon",
+        "fromage râpé, dés de jambon, olives dénoyautées, oeuf, crème fluide, huile, farine, levure chimique.",
+        "grated cheese, diced ham, pitted olives, egg, fluid cream, oil, flour,  baking powder."
+    ],
+    [
+        "Cake Olive Champi (végé/veggie)",
+        "fromage râpé, champignons, olives dénoyautées, oeuf, crème fluide, huile, farine, levure chimique.",
+        "grated cheese, mushrooms, pitted olives, egg, fluid cream, oil, flour, baking powder."
+    ],
+    [
+        "Cake Chorizo",
+        "chorizo, poivrons en conserve, fromage râpé, oeuf, lait, farine, huile, levure chimique.",
+        "chorizo, canned bell pepper, grated cheese, egg, milk, flour, oil, baking powder."
+    ],
+    [
+        "Cake Chèvre Pesto (végé/veggie)",
+        "chèvre, pesto, oeuf, lait, farine, huile, levure chimique.",
+        "goat cheese, pesto, egg, milk, flour, oil, baking powder."
+    ]
+]

@@ -2,7 +2,7 @@ import json
 from PIL import Image, ImageDraw, ImageFont
 from datetime import date, timedelta
 import locale
-
+from unidecode import unidecode
 
 LOGO = "Barbare.png"
 
@@ -261,12 +261,69 @@ def break_line(string, max_width, draw, font):
 ## Transform a string in PascalCase to a string with space between each word
 ## Example: "PascalCase" -> "Pascal Case"
 def tansform_PascalCase_to_string_with_space(string):
-    final = ""
+    final = [""]
     for i in range(len(string)):
         if string[i].isupper() and i != 0:
-            final += " "
-        final += string[i]
-    return final
+            final.append("")
+        final[-1] += string[i]
+    final = [word.strip() for word in final]
+    return " ".join(final)
+
+def find_ingredient(ingredients, name):
+    for ingredient in ingredients:
+        # if(name == "cake chèvre pesto" ):
+        #     print(ingredient[0], name, unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()), unidecode(tansform_PascalCase_to_string_with_space(name).lower()), unidecode(ingredient[0].lower()))
+        if unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()):
+            return ingredient
+    
+    print("Not found:", name)
+    return ("Not found:" + name, "", "")
+
+def flat(l):
+    f = []
+    for c in l:
+        f.extend(c)
+
+    return f 
+
+def uniquess(l):
+    f = []
+    for c in l:
+        if c['text'] not in [a["text"] for a in f]:
+            f.append(c)
+    return f
+
+def generate_text_for_mail(week):
+    text = "👇English translation under the picture, at the end of the email👇\nBonjour à tous !\n{text-custom-french}\n\nVoici la liste des ingrédients des plats:\n"
+
+    # Load ingredients
+    # ingredients.json is a list of tuple (name, french, english)
+    with open("ingredients.json", encoding="utf8") as f:
+        ingredients = json.load(f)
+
+    all_meal = flat([d for d in [c["content"] for c in week["content"]]])
+    all_meal_unique = uniquess(all_meal)
+    print(all_meal_unique)
+    print(all_meal)
+
+    for content in all_meal_unique:
+        if content['is_meal']:
+            ingredient = find_ingredient(ingredients, content['text'])
+            ingredient_french = ingredient[1]
+            text += f"\t- {ingredient[0]}: {ingredient_french}\n"
+    
+    text += "\n\n\n\n\n\n{image goes here}\n\n\n\n\n\n👇English translation👇\n\nHello everyone!\n{text-custom-english}\n\nHere is the list of ingredients of the dishes:\n"
+ 
+    for content in all_meal_unique:
+            if content['is_meal']:
+                ingredient = find_ingredient(ingredients, content['text'])
+                ingredient_english = ingredient[2]
+                text += f"\t- {ingredient[0]}: {ingredient_english}\n"
+                
+    
+    text += "\n\nBar'barement vôtre,\nL'équipe Bar'bare"
+
+    return text.replace("{text-custom-french}", week["text-custom-french"]).replace("{text-custom-english}", week["text-custom-english"])
 
 def main():
 
@@ -278,11 +335,13 @@ def main():
     img = add_content_vertical(img, week["content"])
     if len(img[1]) > 0:
         print("\n".join(img[1]))
-    #img[0].show()
+    img[0].show()
 
     horizontal = setup_img_horizontal(week["header"])
     horizontal = add_content_horizontal(horizontal, week["content"])
     horizontal[0].show()
+
+    print(generate_text_for_mail(week))
 
 if __name__ == "__main__":
     main()

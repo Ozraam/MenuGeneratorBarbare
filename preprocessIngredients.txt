@@ -1,0 +1,91 @@
+FRENCH
+Le Savouayard (végé) : fromage à raclette, röstis, oignons caramélisés, tomates.
+Le RSAv (végé) : rösti, raclette, salade, oignons.
+L'Athénien (végé) : houmous, concombre, féta, tomates, oignons rouges.
+Spartiate (végé) : houmous, concombre, feta, salade, oignon rouge.
+Le Printanier (végé) : concombre, tomates, poivron, mozzarella, salade.
+Le PowerUp (végé) : houmous, salade, tomates, champignon.
+Le Houmoussaillon (végé) : houmous, roquette, tomates, oignons.
+Le Maïté (végé) : fromage ail et fines herbes, concombre, tomates, salade.
+El Sombrero (végé) : guacamole, oignons rouges, tomates, salade.
+Le Bain de fraîcheur (végé) : chèvre, salade, tomates, concombre.
+Chèvre frais (végé) : concombre, oignons rouges, chèvre, salade. 
+Le Chèvre : jambon sec, tomates, fromage de chèvre, salade.
+El Mexicano : chorizo, chèvre, tomates, guacamole.
+Le Mozza : jambon blanc, tomates, mozzarella, salade.
+L'Italien : jambon sec, tomates, mozzarella, salade.
+Le Parisien : beurre, jambon blanc, emmental.
+Le Red Cold : pesto rouge, chorizo, cheddar, tomates, poivron.
+Le NoName : jambon cuit, fromage ail et fines herbes, tomates, salade.
+Le Thon mayo : thon, mayonnaise, salade. 
+L'Alpin : steak, fromage à raclette, crème fraîche, salade.
+Le Lance-Roquette : steak haché, brie, roquette, oignons caramélisés.
+Le 25 : viande kebab, tomates, oignons, salade, sauce blanche.
+Le 24 : viande kebab, oignons, salade, sauce blanche.
+Le Rustique : fromage en tranche, rösti, tomates, salade.
+Le Vosgien : lardons, rösti, fromage râpé, crème fraîche, salade.
+Le Hot Dog : saucisse, sauces à disposition.
+Les pâtes carbo : pâtes, crème fraîche, lardons, oignons.
+Pasta al Pomodoro (végé) : pâtes, sauce tomate maison.
+Poulet cu-riz : poulet, riz, curry, crème fraîche, oignons.
+Mac'N'Cheese (végé) : pâtes, crème fraîche, cheddar.
+Pasta Bolo : pâtes, sauce bolognaise.
+Pasta Pesto : pâtes, sauce pesto.
+Pate Champi : pâtes, crème, champignons, ail, persil.
+Lasagnes : pâtes à lasagnes, sauce bolognaise, crème liquide, beurre, farine, fromage râpé.
+Lasagnes (végé) : pâtes à lasagnes, sauce tomate, crème liquide, beurre, farine, fromage râpé.
+Lasagnes Ricotta Epinard (végé) : pâtes à lasagnes, épinards, ricotta, crème liquide, beurre, farine.
+Quiche : pâte brisée, crème fraîche, lardons, oeufs. 
+Quiche (végé) : pâte brisée, crème fraîche, champignons, oeufs.
+Gratin de pâtes : pâtes, lardons, crème liquide, beurre, farine, fromage râpé.
+Gratin de pâtes (végé) : pâtes, champignons, crème liquide, beurre, farine, fromage râpé.
+Cake Olive Jambon : fromage râpé, dés de jambon, olives dénoyautées, oeuf, crème fluide, huile, farine, levure chimique.
+Cake Olive Champi (végé) : fromage râpé, champignons, olives dénoyautées, oeuf, crème fluide, huile, farine, levure chimique.
+Cake Chorizo : chorizo, poivrons en conserve, fromage râpé, oeuf, lait, farine, huile, levure chimique.
+Cake Chèvre Pesto (végé) : chèvre, pesto, oeuf, lait, farine, huile, levure chimique.
+
+ENGLISH
+Le Savouayard (veggie): raclette, potato rostis, caramelized onions, tomatoes.
+Le RSAv (veggie): potato rostis, salad, raclette, onions.
+L'Athénien (veggie): hummus, cucumber, feta, tomatoes, red onions.
+Spartiate (veggie): hummus, cucumber, feta, salad, red onions.
+Le Printanier (veggie): cucumber, tomatoes, pepper, mozzarella, salad.
+Le PowerUp (veggie): hummus, salad, tomatoes, mushrooms.
+Le Houmoussaillon (veggie): hummus, rocket salad, tomatoes, onions.
+Le Maïté (veggie): garlic and herbs cheese, cucumber, tomatoes, salad.
+El Sombrero (veggie): guacamole, red onions, tomatoes, salad.
+Le Bain de fraîcheur (veggie): goat cheese, salad, tomatoes, cucumber.
+Chèvre frais (veggie): cucumber, red onions, goat cheese, salad. 
+Le Chèvre: dry cured ham, tomatoes, goat cheese, salad.
+El Mexicano: chorizo, goat cheese, tomatoes, guacamole.
+Le Mozza: ham, tomatoes, mozzarella, salad.
+L'Italien: dry cured ham, tomatoes, mozzarella, salad.
+Le Parisien: butter, ham, emmental.
+Le Red Cold: red pesto, chorizo, cheddar, tomatoes, pepper.
+Le NoName: fried ham, garlic and herbs cheese, tomatoes, salad.
+Le Thon mayo: tuna, mayonnaise, salad. 
+L'Alpin: ground beef, raclette cheese, fresh cream, salad.
+Le Lance-Roquette: ground beef, brie cheese, rocket salad, caramelized onions.
+Le 25: kebab meat, tomatoes, onions, salad, white sauce.
+Le 24: kebab meat, onions, salad, white sauce.
+Le Rustique: sliced cheese, potato rostis, tomatoes, salad.
+Le Vosgien: bacon lardons, potato rostis, grated cheese, fresh cream, salad.
+Le Hot Dog: sausage, sauces at will.
+Les pâtes carbo: pastas, crème fraîche, bacon lardons, onions.
+Pasta al Pomodoro (veggie): pastas, homemade tomato sauce.
+Poulet cu-riz: chicken, rice, curry, fresh cream, onions.
+Mac'N'Cheese (veggie): pastas, fresh cream, cheddar.
+Pasta Bolo: pastas, bolognese.
+Pasta Pesto: pastas, pesto sauce.
+Pate Champi: pastas, cream, mushrooms, garlic, parsley.
+Lasagna: lasagna dough, Bolognese sauce, grated cheese, liquid cream, butter, flour.
+Lasagna (veggie): lasagna dough, tomato sauce, liquid cream, butter, flour, grated cheese.
+Lasagnes Ricotta Epinard (veggie): lasagna dough, spinach, ricotta, liquid cream, butter, flour.
+Quiche: shortcrust pastry, crème fraîche, bacon strip, egg.
+Quiche (veggie): shortcrust pastry, crème fraîche, mushroom, egg.
+Gratin de pâtes : pastas, bacon lardons, single cream, butter, flour, grated cheese.
+Gratin de pâtes (veggie) : pastas, mushrooms, single cream, butter, flour, grated cheese.
+Cake Olive Jambon: grated cheese, diced ham, pitted olives, egg, fluid cream, oil, flour,  baking powder.
+Cake Olive Champi (veggie): grated cheese, mushrooms, pitted olives, egg, fluid cream, oil, flour, baking powder.
+Cake Chorizo: chorizo, canned bell pepper, grated cheese, egg, milk, flour, oil, baking powder.
+Cake Chèvre Pesto (veggie): goat cheese, pesto, egg, milk, flour, oil, baking powder.

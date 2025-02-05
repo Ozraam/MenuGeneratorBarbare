@@ -1,12 +1,14 @@
 {
     "header": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Pub"],
+    "text-custom-french": "Voici le menu de cette semaine !",
+    "text-custom-english": "Here is the menu for this week!",
     "content": [
         {
             "day": "Lundi",
             "content": [
                 {
                     "text": "Vosgien",
-                    "img": "Vosgien",
+                    "img": "Le25",
                     "is_meal": true
                 },
                 {
