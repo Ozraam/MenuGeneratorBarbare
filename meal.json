@@ -1,5 +1,5 @@
 {
-    "header": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Pub"],
+    "header": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
     "text-custom-french": "Voici le menu de cette semaine !",
     "text-custom-english": "Here is the menu for this week!",
     "content": [
@@ -7,13 +7,14 @@
             "day": "Lundi",
             "content": [
                 {
-                    "text": "Vosgien",
-                    "img": "Le25",
+                    "text": "Alpin",
+                    "img": "Alpin",
                     "is_meal": true
                 },
                 {
-                    "text": "Venez partager un moment de convivialité autour d'un café ou d'un thé",
-                    "is_meal": false
+                    "text": "Athénien",
+                    "img": "Athénien",
+                    "is_meal": true
                 }
             ]
         },
@@ -21,13 +22,8 @@
             "day": "Mardi",
             "content": [
                 {
-                    "text": "Vosgien",
-                    "img": "Vosgien",
-                    "is_meal": true
-                },
-                {
-                    "text": "cake chèvre pesto",
-                    "img": "cake chèvre pesto",
+                    "text": "Spartiate",
+                    "img": "Spartiate",
                     "is_meal": true
                 }
             ]
@@ -36,13 +32,13 @@
             "day": "Mercredi",
             "content": [
                 {
-                    "text": "BainDeFraicheur",
-                    "img": "BainDeFraicheur",
+                    "text": "Le 25",
+                    "img": "Le25",
                     "is_meal": true
                 },
                 {
-                    "text": "cake chèvre pesto",
-                    "img": "cake chèvre pesto",
+                    "text": "Bain de fraicheur",
+                    "img": "BainDeFraicheur",
                     "is_meal": true
                 }
             ]
@@ -51,13 +47,8 @@
             "day": "Jeudi",
             "content": [
                 {
-                    "text": "BainDeFraicheur",
-                    "img": "BainDeFraicheur",
-                    "is_meal": true
-                },
-                {
-                    "text": "Vosgien",
-                    "img": "Vosgien",
+                    "text": "Pizza",
+                    "img": "Pizzas",
                     "is_meal": true
                 }
             ]
@@ -66,13 +57,14 @@
             "day": "Vendredi",
             "content": [
                 {
-                    "text": "Pasta Bolo",
-                    "img": "Pâtes",
+                    "text": "Red Cold",
+                    "img": "RedCold",
                     "is_meal": true
                 },
                 {
-                    "text": "Wow le BDE offre des pizzas",
-                    "is_meal": false
+                    "text": "Chèvre Frais",
+                    "img": "Chèvre",
+                    "is_meal": true
                 }
             ]
         },
@@ -81,7 +73,7 @@
             "no_head": true,
             "content": [
                 {
-                    "text": "Soirée de l'intégration : venez déguster des plats du monde entier",
+                    "text": "Bonne vacances ! On se retrouve à la rentrée !",
                     "is_meal": false
                 }
             ]

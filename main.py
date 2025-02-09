@@ -260,6 +260,9 @@ def tansform_PascalCase_to_string_with_space(string):
     return " ".join(final)
 
 def find_ingredient(ingredients, name):
+    if name.lower() == "pizza":
+        return ("Pizza", "Pizza", "Pizza")
+
     for ingredient in ingredients:
         # if(name == "cake chèvre pesto" ):
         #     print(ingredient[0], name, unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()), unidecode(tansform_PascalCase_to_string_with_space(name).lower()), unidecode(ingredient[0].lower()))
@@ -297,6 +300,8 @@ def generate_text_for_mail(week):
     for content in all_meal_unique:
         if content['is_meal']:
             ingredient = find_ingredient(ingredients, content['text'])
+            if ingredient[0] == "Pizza":
+                continue
             ingredient_french = ingredient[1]
             text += f"\t- {ingredient[0]}: {ingredient_french}\n"
     
@@ -305,6 +310,8 @@ def generate_text_for_mail(week):
     for content in all_meal_unique:
             if content['is_meal']:
                 ingredient = find_ingredient(ingredients, content['text'])
+                if ingredient[0] == "Pizza":
+                    continue
                 ingredient_english = ingredient[2]
                 text += f"\t- {ingredient[0]}: {ingredient_english}\n"
                 
@@ -342,7 +349,7 @@ def main():
 
     img[0].save("build/portrait.png")
     horizontal[0].save("build/paysage.png")
-    with open("build/mail.txt", 'w') as f:
+    with open("build/mail.txt", 'w', encoding="utf8") as f:
         f.write(mail)
 
 if __name__ == "__main__":
