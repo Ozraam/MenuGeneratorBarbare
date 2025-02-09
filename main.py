@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 from datetime import date, timedelta
 import locale
 from unidecode import unidecode
+import os
 
 LOGO = "Barbare.png"
 
@@ -184,19 +185,8 @@ def add_content_horizontal(img, week):
 
     return (img, warning)
 
-
-
-
-
-
-
-
-
-
-
 def resolve_img_path(img_name):
     return "./Sandwichlogo/" + img_name + ".png"
-
 
 def add_content_vertical(img, week):
     warning = []
@@ -303,8 +293,6 @@ def generate_text_for_mail(week):
 
     all_meal = flat([d for d in [c["content"] for c in week["content"]]])
     all_meal_unique = uniquess(all_meal)
-    print(all_meal_unique)
-    print(all_meal)
 
     for content in all_meal_unique:
         if content['is_meal']:
@@ -335,13 +323,27 @@ def main():
     img = add_content_vertical(img, week["content"])
     if len(img[1]) > 0:
         print("\n".join(img[1]))
-    img[0].show()
+    # img[0].show()
 
     horizontal = setup_img_horizontal(week["header"])
     horizontal = add_content_horizontal(horizontal, week["content"])
-    horizontal[0].show()
+    # horizontal[0].show()
 
-    print(generate_text_for_mail(week))
+    mail = generate_text_for_mail(week)
+
+
+    directory = "build"
+
+    # Check if the directory exists
+    if not os.path.isdir(directory):
+        # Create the directory if it does not exist
+        os.makedirs(directory)
+
+
+    img[0].save("build/portrait.png")
+    horizontal[0].save("build/paysage.png")
+    with open("build/mail.txt", 'w') as f:
+        f.write(mail)
 
 if __name__ == "__main__":
     main()
