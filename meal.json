@@ -25,6 +25,10 @@
                     "text": "Spartiate",
                     "img": "Spartiate",
                     "is_meal": true
+                },
+                {
+                    "text": "Aller à Abso mercredi",
+                    "is_meal": false
                 }
             ]
         },
@@ -73,7 +77,7 @@
             "no_head": true,
             "content": [
                 {
-                    "text": "Bonne vacances ! On se retrouve à la rentrée !",
+                    "text": "Bonne\nvacances !\nOn se retrouve à\nla rentrée !",
                     "is_meal": false
                 }
             ]
