@@ -1,4 +1,5 @@
 import json
+from time import sleep
 from PIL import Image, ImageDraw, ImageFont
 from datetime import date, timedelta
 import locale
@@ -320,10 +321,101 @@ def generate_text_for_mail(week):
 
     return text.replace("{text-custom-french}", week["text-custom-french"]).replace("{text-custom-english}", week["text-custom-english"])
 
-def main():
 
-    with open("meal.json", encoding="utf8") as f:
-        week = json.load(f)
+
+
+def args_get_string(args, index):
+    string = ""
+    while not args[index].endswith("\""):
+        string += args[index] + " "
+        index += 1
+
+    string += args[index]
+    return (string[1:-1], index)
+
+
+
+
+# Proccess the command line arguments and transform them into a dictionary
+# Line arguments are:
+#  --header <list of string> 
+#  --custom-text-french <string>
+#  --custom-text-english <string>
+#  --content <list of dictionary> 
+#       --day <string>
+#       --day-content <list of dictionary> (max 2)
+#           --is-meal (true if present)
+#           --text <string>
+#           --img <string> (optional)
+#  --output <string> (optional)
+def cli_process(args):
+    week = {
+        "header": [],
+        "text-custom-french": "",
+        "text-custom-english": "",
+        "content": []
+    }
+
+    i = 0
+    while i < len(args):
+        if args[i] == "--header":
+            header = []
+            i += 1
+            while not args[i].startswith("--"):
+                header.append(args[i])
+                i += 1
+            week["header"] = header
+
+        elif args[i] == "--custom-text-french":
+            text, i = args_get_string(args, i+1)
+            i += 1
+            week["text-custom-french"] = text
+        elif args[i] == "--custom-text-english":
+            text, i = args_get_string(args, i+1)
+            i += 1
+            week["text-custom-english"] = text
+        elif args[i] == "--content":
+            day = {
+                "day": args[i+2],
+                "content": []
+            }
+            i += 3
+            if args[i] == "--day-content":
+                i += 1
+            else:
+                print("Error: --day-content is missing " + args[i])
+                i += 1
+                continue
+
+            while i < len(args) and args[i] != "--content":
+                content = {
+                    "text": "",
+                    "is_meal": False
+                }
+                if args[i] == "--is-meal":
+                    content["is_meal"] = True
+                    i += 1
+                if args[i] == "--text":
+                    text, i = args_get_string(args, i+1)
+                    content["text"] = text
+                    i += 1
+                
+                if i < len(args) and args[i] == "--img":
+                    content["img"] = args[i+1]
+                    i += 2
+                
+                day["content"].append(content)
+                # i += 1
+            week["content"].append(day)
+        else:
+            i += 1
+
+    return week
+
+
+
+
+def main_cli(week):
     
     img = setup_img_vertical(week["header"])
 
@@ -347,10 +439,25 @@ def main():
         os.makedirs(directory)
 
 
-    img[0].save("build/portrait.png")
-    horizontal[0].save("build/paysage.png")
+    img[0].save("build/vertical.png")
+    horizontal[0].save("build/horizontal.png")
     with open("build/mail.txt", 'w', encoding="utf8") as f:
         f.write(mail)
 
+def generate_img_from_args(args):
+    week = cli_process(args)
+
+    main_cli(week)
+
+
 if __name__ == "__main__":
-    main()
+    with open("cli.txt", encoding="utf8") as f:
+        week = cli_process(f.read().split())
+
+
+    print(week)
+
+    main_cli(week)
+
+
+    
