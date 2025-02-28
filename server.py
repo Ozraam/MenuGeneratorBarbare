@@ -12,6 +12,8 @@ mail = ""
 
 mealList = {}
 
+last_menu = None
+
 def cors_response(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -25,7 +27,8 @@ def get_meal_list():
 @app.route('/generateImages', methods=['GET'])
 def generate_images():
     args = request.args.get('menu', default="", type=str).split(" ")
-    print(args)
+    last_menu = cli_process(args)
+
     if args == [""]:
         return jsonify({"error": "No arguments provided"}), 400
     try:
@@ -33,6 +36,14 @@ def generate_images():
     except Exception as e:
         return cors_response(jsonify({"error": str(e)})), 500
     return cors_response(jsonify({"message": "Images generated successfully"}))
+
+@app.route('/getLastMenu', methods=['GET'])
+def get_last_menu():
+    if last_menu is None:
+        return jsonify({"error": "No menu generated yet"}), 400
+    return cors_response(jsonify(last_menu))
+
+
 
 @app.route('/getMailingText', methods=['GET'])
 def get_mailing_text():
