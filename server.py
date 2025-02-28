@@ -12,18 +12,27 @@ mail = ""
 
 mealList = {}
 
+def cors_response(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 @app.route('/getMealList', methods=['GET'])
 def get_meal_list():
-    return jsonify(mealList)
+    response = jsonify(mealList)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/generateImages', methods=['GET'])
 def generate_images():
-    args = request.args.get('width', default="", type=str).split(" ")
+    args = request.args.get('menu', default="", type=str).split(" ")
+    print(args)
     if args == [""]:
         return jsonify({"error": "No arguments provided"}), 400
-
-    generate_img_from_args(args)
-    return jsonify({"message": "Images generated successfully"})
+    try:
+        generate_img_from_args(args)
+    except Exception as e:
+        return cors_response(jsonify({"error": str(e)})), 500
+    return cors_response(jsonify({"message": "Images generated successfully"}))
 
 @app.route('/getMailingText', methods=['GET'])
 def get_mailing_text():
