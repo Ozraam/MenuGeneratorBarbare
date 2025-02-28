@@ -1,4 +1,5 @@
 import json
+import os
 from flask import Flask, jsonify, send_file, request
 from PIL import Image
 from io import BytesIO
@@ -6,13 +7,7 @@ from main import generate_img_from_args, cli_process
 
 app = Flask(__name__)
 
-verticalImage : Image = None
-horizontalImage : Image = None
-mail = ""
-
 mealList = {}
-
-last_menu = None
 
 def cors_response(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -27,7 +22,11 @@ def get_meal_list():
 @app.route('/generateImages', methods=['GET'])
 def generate_images():
     args = request.args.get('menu', default="", type=str).split(" ")
+    
     last_menu = cli_process(args)
+
+    with open("build/last_menu.txt", "w", encoding="utf8") as f:
+        json.dump(last_menu, f, ensure_ascii=False)
 
     if args == [""]:
         return jsonify({"error": "No arguments provided"}), 400
@@ -39,8 +38,14 @@ def generate_images():
 
 @app.route('/getLastMenu', methods=['GET'])
 def get_last_menu():
+    if os.path.exists("build/last_menu.txt"):
+        with open("build/last_menu.txt", "r", encoding="utf8") as f:
+            last_menu = f.read()
+    else:
+        last_menu = None
+
     if last_menu is None:
-        return jsonify({"error": "No menu generated yet"}), 400
+        return cors_response(jsonify({"error": "No menu generated yet"})), 400
     return cors_response(jsonify(last_menu))
 
 
