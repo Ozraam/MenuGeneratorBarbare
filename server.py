@@ -40,7 +40,7 @@ def generate_images():
 def get_last_menu():
     if os.path.exists("build/last_menu.txt"):
         with open("build/last_menu.txt", "r", encoding="utf8") as f:
-            last_menu = f.read()
+            last_menu = json.load(f)
     else:
         last_menu = None
 
