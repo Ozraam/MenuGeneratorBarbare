@@ -27,28 +27,39 @@ def generate_images():
 
 @app.route('/getMailingText', methods=['GET'])
 def get_mailing_text():
-    with open("build/mail.txt", "r") as f:
-        mailing_text = f.read()
-    return jsonify({"mailingText": mailing_text})
+    try:
+        with open("build/mail.txt", "r", encoding="utf8") as f:
+            mailing_text = f.read()
+    except FileNotFoundError:
+        with open("default_img/mail.txt", "r", encoding="utf8") as f:
+            mailing_text = f.read()
+    
+    response = jsonify({"text": mailing_text})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/verticalMenu', methods=['GET'])
 def get_image1():
-    # if verticalImage is None:
-    #     return jsonify({"error": "Image not found"}), 404
-    
-    # img_io = BytesIO()
-    # verticalImage.save(img_io, 'PNG')
-    # img_io.seek(0)
-    return send_file("build/vertical.png", mimetype='image/png')
+    file_name = "build/vertical.png"
+    # check if the file exists else send default image
+    try:
+        return send_file(file_name, mimetype='image/png')
+    except FileNotFoundError:
+        return send_file("default_img/vertical.png", mimetype='image/png')
+
 
 @app.route('/horizontalMenu', methods=['GET'])
 def get_image2():
-    return send_file("build/horizontal.png", mimetype='image/png')
+    file_name = "build/horizontal.png"
+    # check if the file exists else send default image
+    try:
+        return send_file(file_name, mimetype='image/png')
+    except FileNotFoundError:
+        return send_file("default_img/horizontal.png", mimetype='image/png')
 
 if __name__ == '__main__':
     with open("mealList.json", "r") as f:
         mealList = json.load(f)
-
 
 
     app.run(debug=True, host="0.0.0.0")
