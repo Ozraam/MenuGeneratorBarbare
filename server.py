@@ -7,7 +7,15 @@ from main import generate_img_from_args, cli_process
 
 app = Flask(__name__)
 
+# Load meal list at application startup
 mealList = {}
+try:
+    with open("mealList.json", "r") as f:
+        mealList = json.load(f)
+except FileNotFoundError:
+    app.logger.warning("mealList.json not found, using empty dictionary")
+except json.JSONDecodeError:
+    app.logger.warning("mealList.json contains invalid JSON, using empty dictionary")
 
 def cors_response(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -83,8 +91,7 @@ def get_image2():
         return send_file("default_img/horizontal.png", mimetype='image/png')
 
 if __name__ == '__main__':
-    with open("mealList.json", "r") as f:
-        mealList = json.load(f)
 
-
-    app.run(debug=True, host="0.0.0.0")
+    # This block only runs when executing the script directly (development mode)
+    # It won't run when the application is served by Gunicorn
+    app.run(debug=True, host="0.0.0.0", port=5000)

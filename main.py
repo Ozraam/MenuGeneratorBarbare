@@ -168,7 +168,7 @@ def add_content_horizontal(img, week):
                 # print(sandwichimg.mode)
                 img.paste(sandwichimg, (img_x, content_y), sandwichimg)
 
-                name = break_line(tansform_PascalCase_to_string_with_space(content['text']), 390, draw, font).capitalize()
+                name = break_line(content['text'], 390, draw, font).capitalize()
 
                 text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
 
@@ -218,7 +218,7 @@ def add_content_vertical(img, week):
                 # print(sandwichimg.mode)
                 img.paste(sandwichimg, (img_x, content_y), sandwichimg)
 
-                name = break_line(tansform_PascalCase_to_string_with_space(content['text']), 300, draw, font).capitalize()
+                name = break_line(content['text'], 300, draw, font).capitalize()
 
                 text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
 
@@ -237,6 +237,9 @@ def add_content_vertical(img, week):
     return (img, warning)
 
 def break_line(string, max_width, draw, font):
+    if string == "RSAv":
+        return string
+
     words = string.split(" ")
     lines = []
     current_line = ""
@@ -252,6 +255,9 @@ def break_line(string, max_width, draw, font):
 ## Transform a string in PascalCase to a string with space between each word
 ## Example: "PascalCase" -> "Pascal Case"
 def tansform_PascalCase_to_string_with_space(string):
+    if string == "RSAv":
+        return string
+
     final = [""]
     for i in range(len(string)):
         if string[i].isupper() and i != 0:
@@ -267,7 +273,7 @@ def find_ingredient(ingredients, name):
     for ingredient in ingredients:
         # if(name == "cake chèvre pesto" ):
         #     print(ingredient[0], name, unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()), unidecode(tansform_PascalCase_to_string_with_space(name).lower()), unidecode(ingredient[0].lower()))
-        if unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()):
+        if unidecode(name.lower()) in unidecode(ingredient[0].lower()):
             return ingredient
     
     print("Not found:", name)
