@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from flask import Flask, jsonify, send_file, request
 from PIL import Image
 from io import BytesIO
@@ -33,16 +34,18 @@ def generate_images():
     
     last_menu = cli_process(args)
 
+    filename = int(time.time())
+
     with open("build/last_menu.txt", "w", encoding="utf8") as f:
         json.dump(last_menu, f, ensure_ascii=False)
 
     if args == [""]:
         return jsonify({"error": "No arguments provided"}), 400
     try:
-        generate_img_from_args(args)
+        generate_img_from_args(args, filename)
     except Exception as e:
         return cors_response(jsonify({"error": str(e)})), 500
-    return cors_response(jsonify({"message": "Images generated successfully"}))
+    return cors_response(jsonify({"message": "Images generated successfully", "vertical": f"{filename}", "horizontal": f"{filename}"}))
 
 @app.route('/getLastMenu', methods=['GET'])
 def get_last_menu():
@@ -73,7 +76,9 @@ def get_mailing_text():
 
 @app.route('/verticalMenu', methods=['GET'])
 def get_image1():
-    file_name = "build/vertical.png"
+    epoch = request.args.get("epoch", default="", type=str)
+
+    file_name = f"build/{epoch}-vertical.png"
     # check if the file exists else send default image
     try:
         return send_file(file_name, mimetype='image/png')
@@ -83,7 +88,9 @@ def get_image1():
 
 @app.route('/horizontalMenu', methods=['GET'])
 def get_image2():
-    file_name = "build/horizontal.png"
+    epoch = request.args.get("epoch", default="", type=str)
+
+    file_name = f"build/{epoch}-horizontal.png"
     # check if the file exists else send default image
     try:
         return send_file(file_name, mimetype='image/png')

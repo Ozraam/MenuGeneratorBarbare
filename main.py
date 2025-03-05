@@ -421,7 +421,7 @@ def cli_process(args):
 
 
 
-def main_cli(week):
+def main_cli(week, filename):
     
     img = setup_img_vertical(week["header"])
 
@@ -445,15 +445,15 @@ def main_cli(week):
         os.makedirs(directory)
 
 
-    img[0].save("build/vertical.png")
-    horizontal[0].save("build/horizontal.png")
+    img[0].save(f"build/{filename}-vertical.png")
+    horizontal[0].save(f"build/{filename}-horizontal.png")
     with open("build/mail.txt", 'w', encoding="utf8") as f:
         f.write(mail)
 
-def generate_img_from_args(args):
+def generate_img_from_args(args, filename):
     week = cli_process(args)
 
-    main_cli(week)
+    main_cli(week, filename)
 
 
 if __name__ == "__main__":
