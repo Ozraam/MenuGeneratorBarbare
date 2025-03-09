@@ -28,6 +28,10 @@
         "image": "Ch\u00e8vre"
     },
     {
+        "name": "Le Chèvre",
+        "image": "Ch\u00e8vre"
+    },
+    {
         "name": "Classique",
         "image": "Classique"
     },
@@ -64,11 +68,11 @@
         "image": "Ma\u00eft\u00e9"
     },
     {
-        "name": "Mexicain",
+        "name": "El Mexicano",
         "image": "Mexicain"
     },
     {
-        "name": "Mozzarella",
+        "name": "Le Mozza",
         "image": "Mozzarella"
     },
     {
@@ -92,7 +96,7 @@
         "image": "Pizzas"
     },
     {
-        "name": "Power Up",
+        "name": "PowerUp",
         "image": "PowerUp"
     },
     {

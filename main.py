@@ -168,7 +168,7 @@ def add_content_horizontal(img, week):
                 # print(sandwichimg.mode)
                 img.paste(sandwichimg, (img_x, content_y), sandwichimg)
 
-                name = break_line(content['text'], 390, draw, font).capitalize()
+                name = break_line(content['text'], 390, draw, font)
 
                 text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
 
@@ -218,7 +218,7 @@ def add_content_vertical(img, week):
                 # print(sandwichimg.mode)
                 img.paste(sandwichimg, (img_x, content_y), sandwichimg)
 
-                name = break_line(content['text'], 300, draw, font).capitalize()
+                name = break_line(content['text'], 300, draw, font)
 
                 text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
 
