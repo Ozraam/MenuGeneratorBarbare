@@ -8,6 +8,10 @@
         "image": "Ath\u00e9nien"
     },
     {
+        "name": "Alsacien",
+        "image": "Alsacien"
+    },
+    {
         "name": "Bain de Fraicheur",
         "image": "BainDeFraicheur"
     },
@@ -34,6 +38,10 @@
     {
         "name": "Classique",
         "image": "Classique"
+    },
+    {
+        "name": "Comtois",
+        "image": "Comtois"
     },
     {
         "name": "Hot Dog",

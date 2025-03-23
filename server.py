@@ -44,6 +44,7 @@ def generate_images():
     try:
         generate_img_from_args(args, filename)
     except Exception as e:
+        print(e)
         return cors_response(jsonify({"error": str(e)})), 500
     return cors_response(jsonify({"message": "Images generated successfully", "vertical": f"{filename}", "horizontal": f"{filename}"}))
 
