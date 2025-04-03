@@ -1,469 +1,518 @@
 import json
-from time import sleep
-from PIL import Image, ImageDraw, ImageFont
+import os
 from datetime import date, timedelta
 import locale
 from unidecode import unidecode
-import os
+from PIL import Image, ImageDraw, ImageFont
 
-LOGO = "Barbare.png"
+# Constants
+LOGO_PATH = "Barbare.png"
+FONT_PATH = "./OpenSans-VariableFont_wdth,wght.ttf"
+COLORS = {
+    "background": "#FFF4EA",
+    "primary": "#E6A515",
+    "secondary": "#B77236",
+    "text": "#FFF4EA"
+}
+SANDWICH_DIR = "./Sandwichlogo/"
+OUTPUT_DIR = "build"
 
-## Return the date of the next monday and the date of the next friday in the format "Semaine du 01 au 05 mars 2021"
-def next_week():
-    locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')  # Set locale to French
-    today = date.today()
-    days_ahead = 7 - today.weekday()
-    monday = today + timedelta(days=days_ahead)
-    friday = monday + timedelta(days=4)
-    return ("Semaine du " + monday.strftime("%d") + " au " + friday.strftime("%d %B\n%Y")).upper()
-
-## Setup image
-## Create a new image 1080*1920 with background of color #FFF4EA
-## Add two strip of alternate color #E6A515 and #B77236, each of 743px height and 360px wide, the strips start at the bottom and a white space is left at the top
-## Add the text of the week in each strip
-def setup_img_vertical(header):
-    img = Image.new('RGBA', (1080, 1920), color = '#FFF4EA')
-
-    for i in range(1920 - 743*2, 1920, 743):
-        for j in range(0, 1080, 360):
-            if (i//743 + j//360) % 2 == 0:
-                img.paste('#E6A515', (j, i, j+360, i+743))
-            else:
-                img.paste('#B77236', (j, i, j+360, i+743))
-    
-    text_of_week = next_week()
-
-    # Draw text in the rigth of the white space
-    
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("./OpenSans-VariableFont_wdth,wght.ttf", 45)
-    draw.multiline_text((719, 348), text_of_week, font=font, fill="#E6A515", align="center", stroke_width=1, stroke_fill="#E6A515", anchor="mm")
-
-    font2 = font.font_variant(size=90)
-
-    draw.multiline_text((445, 30), "MENU DE LA\nSEMAINE", font=font2, fill="#B77236", align="center", stroke_width=4, stroke_fill="#B77236")
-
-
-    # Add logo
-    logo = Image.open(LOGO)
-
-    logo_size = logo.size
-    desired_width = 360
-    desired_height = 360 * logo_size[1] // logo_size[0]
-
-    logo = logo.resize((desired_width, desired_height))
-    img.paste(logo, (10, 10), logo)
-
-    font_day = font.font_variant(size=70)
-
-    # add day of the week in each strip
-    for (i, head) in enumerate(header):
-        y = 1920 - 743*2 + 743 * (0 if i < 3 else 1)
-        x = 360*i % 1080
-
-        y_line_offset = 95
-
-        draw.line((x+10, y + 10, x + 350, y + 10), fill="#FFF4EA", width=5)
-        draw.line((x+10, y + y_line_offset, x + 350, y + y_line_offset), fill="#FFF4EA", width=5)
-
-        draw.multiline_text(
-            (x + 180, y + 50),
-            head.upper(), 
-            font=font_day, 
-            fill="#FFF4EA", 
-            align="center", 
-            stroke_width=2, 
-            stroke_fill="#FFF4EA",
-            anchor="mm"
-        )
-
-    return img
-
-
-def setup_img_horizontal(header):
-    img = Image.new('RGBA', (1920, 1080), color = '#FFF4EA')
-
-    for j in range(0, 1920, 1920//5):
-        if j//(1920//5) % 2 == 0:
-            img.paste('#E6A515', (j, 398, j+384, 1080))
-        else:
-            img.paste('#B77236', (j, 398, j+384, 1080))
-    
-    text_of_week = " ".join(next_week().split("\n"))
-
-
-    # Draw text in the rigth of the white space
-    
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("./OpenSans-VariableFont_wdth,wght.ttf", 45)
-    draw.text((1075, 230), text_of_week, font=font, fill="#E6A515", align="center", stroke_width=1, stroke_fill="#E6A515", anchor="mt")
-
-    font2 = font.font_variant(size=110)
-
-    draw.text((500, 80), "MENU DE LA SEMAINE", font=font2, fill="#B77236", align="center", stroke_width=4, stroke_fill="#B77236", )
-
-
-    # Add logo
-    logo = Image.open(LOGO)
-
-    logo_size = logo.size
-    desired_width = 360
-    desired_height = 360 * logo_size[1] // logo_size[0]
-
-    logo = logo.resize((desired_width, desired_height))
-    img.paste(logo, (10, 10), logo)
-
-    font_day = font.font_variant(size=70)
-
-    # add day of the week in each strip
-    for (i, head) in enumerate(header[:5]):
-        y = 398
-        x = 1920//5 * i
-
-        y_line_offset = 95
-
-        draw.line((x+10, y + 10, x + 1920//5 - 10, y + 10), fill="#FFF4EA", width=5)
-        draw.line((x+10, y + y_line_offset, x + 1920//5 - 10, y + y_line_offset), fill="#FFF4EA", width=5)
-
-        draw.multiline_text(
-            (x + 1920//5//2, y + 50),
-            head.upper(), 
-            font=font_day, 
-            fill="#FFF4EA", 
-            align="center", 
-            stroke_width=2, 
-            stroke_fill="#FFF4EA",
-            anchor="mm"
-        )
-
-    return img
-
-
-def add_content_horizontal(img, week):
-    warning = []
-
-    desired_img_width = 250
-
-    for i, day in enumerate(week[:5]):
-        box_y = 398
-        box_x = 1920//5 * i
-
-        draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype("./OpenSans-VariableFont_wdth,wght.ttf", 40)
-
-        content_y = box_y + 80
-        img_x = box_x + (1920//5 - desired_img_width) // 2
-
-        if (len(day['content']) > 2):
-            day['content'] = day['content'][:2]
-            warning.append("Warning: too many content for a day, only the first two will be displayed, day: " + day["day"])
-
-        for content in day['content']:
-            if (content['is_meal']):
-                sandwichimg = Image.open(resolve_img_path(content['img']))
-                sandwichimg = sandwichimg.convert("RGBA")
-                sandwichimg_size = sandwichimg.size
-                desired_height = desired_img_width * sandwichimg_size[1] // sandwichimg_size[0]
-                sandwichimg = sandwichimg.resize((desired_img_width, desired_height))
-                # print(sandwichimg.mode)
-                img.paste(sandwichimg, (img_x, content_y), sandwichimg)
-
-                name = break_line(content['text'], 390, draw, font)
-
-                text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
-
-                text_offset = text_height // 4
-
-                draw.text((box_x + 398//2, content_y + desired_height + text_offset), name, font=font, fill="#FFF4EA", align="center", stroke_width=1, stroke_fill="#FFF4EA", anchor="mm")
+class MenuGenerator:
+    def __init__(self):
+        self.ensure_output_directory()
+        locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')  # Set locale to French
+        
+        # Define layout configurations for vertical and horizontal formats
+        self.layouts = {
+            "vertical": {
+                "image_size": (1080, 1920),
+                "title_position": (445, 30),
+                "title_text": "MENU DE LA\nSEMAINE",
+                "title_font_size": 90,
+                "week_text_position": (719, 348),
+                "week_text_anchor": "mm",
+                "week_font_size": 45,
+                "grid": {
+                    "rows": 2,
+                    "cols": 3,
+                    "cell_width": 360,
+                    "cell_height": 743,
+                    "y_start": 1920 - 743*2
+                },
+                "day_font_size": 70,
+                "content_font_size": 45,
+                "max_text_width": 300,
+                "content_spacing": 50
+            },
+            "horizontal": {
+                "image_size": (1920, 1080),
+                "title_position": (500, 80),
+                "title_text": "MENU DE LA SEMAINE",
+                "title_font_size": 110,
+                "week_text_position": (1075, 230),
+                "week_text_anchor": "mt",
+                "week_font_size": 45,
+                "grid": {
+                    "rows": 1,
+                    "cols": 5,
+                    "cell_width": 1920 // 5,
+                    "cell_height": 682,
+                    "y_start": 398
+                },
+                "day_font_size": 70,
+                "content_font_size": 40,
+                "max_text_width": 390,
+                "content_spacing": 30
+            }
+        }
+        
+    def ensure_output_directory(self):
+        """Ensure the output directory exists"""
+        if not os.path.isdir(OUTPUT_DIR):
+            os.makedirs(OUTPUT_DIR)
             
-            else:
-                text = break_line(content['text'], 390, draw, font)
-                draw.multiline_text(
-                    (box_x + 398//2, content_y + 643 //4), 
-                    text, font=font, fill="#FFF4EA", align="center", stroke_width=1, stroke_fill="#FFF4EA", anchor="mm")
+    def get_next_week_text(self):
+        """Return the date of the next Monday and Friday in French format"""
+        today = date.today()
+        days_ahead = 7 - today.weekday()
+        monday = today + timedelta(days=days_ahead)
+        friday = monday + timedelta(days=4)
+        return ("Semaine du " + monday.strftime("%d") + " au " + friday.strftime("%d %B\n%Y")).upper()
     
-            content_y += 30 + desired_height
-
-    return (img, warning)
-
-def resolve_img_path(img_name):
-    return "./Sandwichlogo/" + img_name + ".png"
-
-def add_content_vertical(img, week):
-    warning = []
-
-    desired_img_width = 250
-
-    for i, day in enumerate(week):
-        box_y = 1920 - 743*2 + 743 * (0 if i < 3 else 1)
-        box_x = 360*i % 1080
-
+    def get_font(self, size):
+        """Get a font with the specified size"""
+        return ImageFont.truetype(FONT_PATH, size)
+    
+    def create_base_image(self, layout_type):
+        """Create a new image with the specified layout"""
+        layout = self.layouts[layout_type]
+        return Image.new('RGBA', layout["image_size"], color=COLORS["background"])
+    
+    def draw_header(self, img, layout_type):
+        """Draw the header with logo and title text"""
+        layout = self.layouts[layout_type]
         draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype("./OpenSans-VariableFont_wdth,wght.ttf", 45)
-
-        content_y = box_y + 100
-        img_x = box_x + (360 - desired_img_width) // 2
-
-        if (len(day['content']) > 2):
-            day['content'] = day['content'][:2]
-            warning.append("Warning: too many content for a day, only the first two will be displayed, day: " + day["day"])
-
-        for content in day['content']:
-            if (content['is_meal']):
-                sandwichimg = Image.open(resolve_img_path(content['img']))
-                sandwichimg = sandwichimg.convert("RGBA")
-                sandwichimg_size = sandwichimg.size
-                desired_height = desired_img_width * sandwichimg_size[1] // sandwichimg_size[0]
-                sandwichimg = sandwichimg.resize((desired_img_width, desired_height))
-                # print(sandwichimg.mode)
-                img.paste(sandwichimg, (img_x, content_y), sandwichimg)
-
-                name = break_line(content['text'], 300, draw, font)
-
-                text_height = draw.multiline_textbbox((0, 0), name, font=font)[3]
-
-                text_offset = text_height // 4
-
-                draw.text((box_x + 180, content_y + desired_height + text_offset), name, font=font, fill="#FFF4EA", align="center", stroke_width=1, stroke_fill="#FFF4EA", anchor="mm")
+        
+        # Add logo
+        logo = Image.open(LOGO_PATH)
+        logo_size = logo.size
+        desired_width = 360
+        desired_height = int(360 * logo_size[1] / logo_size[0])
+        logo = logo.resize((desired_width, desired_height))
+        img.paste(logo, (10, 10), logo)
+        
+        # Draw title
+        title_font = self.get_font(layout["title_font_size"])
+        draw.multiline_text(
+            layout["title_position"], 
+            layout["title_text"], 
+            font=title_font, 
+            fill=COLORS["secondary"], 
+            align="center", 
+            stroke_width=4, 
+            stroke_fill=COLORS["secondary"]
+        )
+        
+        # Draw week text
+        week_text = self.get_next_week_text()
+        if layout_type == "horizontal":
+            week_text = " ".join(week_text.split("\n"))
             
+        week_font = self.get_font(layout["week_font_size"])
+        draw.text(
+            layout["week_text_position"], 
+            week_text, 
+            font=week_font, 
+            fill=COLORS["primary"], 
+            align="center", 
+            stroke_width=1, 
+            stroke_fill=COLORS["primary"], 
+            anchor=layout["week_text_anchor"]
+        )
+            
+        return img
+    
+    def create_day_grid(self, img, header, layout_type):
+        """Create the grid of days with alternating colors"""
+        layout = self.layouts[layout_type]
+        grid = layout["grid"]
+        draw = ImageDraw.Draw(img)
+        
+        # Create grid with alternating colors
+        for row in range(grid["rows"]):
+            for col in range(grid["cols"]):
+                y = grid["y_start"] + (row * grid["cell_height"])
+                x = col * grid["cell_width"]
+                
+                # Choose color based on alternating pattern
+                color = COLORS["primary"] if (row + col) % 2 == 0 else COLORS["secondary"]
+                
+                # Fill cell with color
+                img.paste(color, (
+                    x, 
+                    y, 
+                    x + grid["cell_width"], 
+                    y + grid["cell_height"]
+                ))
+        
+        # Add day headers to each cell
+        font_day = self.get_font(layout["day_font_size"])
+        days_to_process = header[:grid["rows"] * grid["cols"]]
+        
+        for i, day in enumerate(days_to_process):
+            if i >= grid["rows"] * grid["cols"]:
+                break
+                
+            row = i // grid["cols"]
+            col = i % grid["cols"]
+            
+            y = grid["y_start"] + (row * grid["cell_height"])
+            x = col * grid["cell_width"]
+            
+            # Draw separator lines
+            y_line_offset = 95
+            line_start_x = x + 10
+            line_end_x = x + grid["cell_width"] - 10
+            
+            draw.line(
+                (line_start_x, y + 10, line_end_x, y + 10), 
+                fill=COLORS["background"], 
+                width=5
+            )
+            draw.line(
+                (line_start_x, y + y_line_offset, line_end_x, y + y_line_offset), 
+                fill=COLORS["background"], 
+                width=5
+            )
+            
+            # Draw day text
+            draw.multiline_text(
+                (x + grid["cell_width"]//2, y + 50),
+                day.upper(), 
+                font=font_day, 
+                fill=COLORS["text"], 
+                align="center", 
+                stroke_width=2, 
+                stroke_fill=COLORS["text"],
+                anchor="mm"
+            )
+                
+        return img
+    
+    def break_line(self, string, max_width, draw, font):
+        """Break text into multiple lines to fit within max_width"""
+        if string == "RSAv":
+            return string
+            
+        words = string.split(" ")
+        lines = []
+        current_line = ""
+        
+        for word in words:
+            test_line = current_line + word + " "
+            current_width = draw.multiline_textbbox((0, 0), test_line, font=font)[2]
+            
+            if current_width > max_width:
+                lines.append(current_line)
+                current_line = word + " "
             else:
-                text = break_line(content['text'], 350, draw, font)
-                draw.multiline_text(
-                    (box_x + 180, content_y + 643 //4), 
-                    text, font=font, fill="#FFF4EA", align="center", stroke_width=1, stroke_fill="#FFF4EA", anchor="mm")
+                current_line = test_line
+                
+        lines.append(current_line)
+        return "\n".join(lines)
     
-            content_y += 50 + desired_height + text_height // 8
-
-    return (img, warning)
-
-def break_line(string, max_width, draw, font):
-    if string == "RSAv":
-        return string
-
-    words = string.split(" ")
-    lines = []
-    current_line = ""
-    for word in words:
-        current_width = draw.multiline_textbbox((0, 0), current_line + word, font=font)[2]
-        if current_width > max_width:
-            lines.append(current_line)
-            current_line = ""
-        current_line += word + " "
-    lines.append(current_line)
-    return "\n".join(lines)
-
-## Transform a string in PascalCase to a string with space between each word
-## Example: "PascalCase" -> "Pascal Case"
-def tansform_PascalCase_to_string_with_space(string):
-    if string == "RSAv":
-        return string
-
-    final = [""]
-    for i in range(len(string)):
-        if string[i].isupper() and i != 0:
-            final.append("")
-        final[-1] += string[i]
-    final = [word.strip() for word in final]
-    return " ".join(final)
-
-def find_ingredient(ingredients, name):
-    if name.lower() == "pizza":
-        return ("Pizza", "Pizza", "Pizza")
-
-    for ingredient in ingredients:
-        # if(name == "cake chèvre pesto" ):
-        #     print(ingredient[0], name, unidecode(tansform_PascalCase_to_string_with_space(name).lower()) in unidecode(ingredient[0].lower()), unidecode(tansform_PascalCase_to_string_with_space(name).lower()), unidecode(ingredient[0].lower()))
-        if unidecode(name.lower()) in unidecode(ingredient[0].lower()):
-            return ingredient
+    def add_content(self, img, week_data, layout_type):
+        """Add content to the image based on layout"""
+        layout = self.layouts[layout_type]
+        grid = layout["grid"]
+        warnings = []
+        desired_img_width = 250
+        draw = ImageDraw.Draw(img)
+        
+        # Get the number of cells based on the layout
+        max_cells = grid["rows"] * grid["cols"]
+        days_to_process = week_data[:max_cells]
+        font = self.get_font(layout["content_font_size"])
+            
+        for i, day in enumerate(days_to_process):
+            if i >= max_cells:
+                break
+                
+            # Calculate cell position
+            row = i // grid["cols"]
+            col = i % grid["cols"]
+            
+            box_y = grid["y_start"] + (row * grid["cell_height"])
+            box_x = col * grid["cell_width"]
+            center_x = box_x + grid["cell_width"] // 2
+                
+            content_y = box_y + 100  # Initial y position for content
+            img_x = box_x + (grid["cell_width"] - desired_img_width) // 2
+            
+            # Limit to 2 content items per day
+            if len(day['content']) > 2:
+                day['content'] = day['content'][:2]
+                warnings.append(f"Warning: too many content for a day, only the first two will be displayed, day: {day['day']}")
+                
+            for content in day['content']:
+                if content['is_meal']:
+                    # Add meal image
+                    sandwich_path = SANDWICH_DIR + content['img'] + ".png"
+                    sandwich_img = Image.open(sandwich_path).convert("RGBA")
+                    sandwich_size = sandwich_img.size
+                    desired_height = int(desired_img_width * sandwich_size[1] / sandwich_size[0])
+                    sandwich_img = sandwich_img.resize((desired_img_width, desired_height))
+                    img.paste(sandwich_img, (img_x, content_y), sandwich_img)
+                    
+                    # Add meal text
+                    formatted_text = self.break_line(content['text'], layout["max_text_width"], draw, font)
+                    text_height = draw.multiline_textbbox((0, 0), formatted_text, font=font)[3]
+                    text_offset = text_height // 4
+                    
+                    draw.text(
+                        (center_x, content_y + desired_height + text_offset), 
+                        formatted_text, 
+                        font=font, 
+                        fill=COLORS["text"], 
+                        align="center", 
+                        stroke_width=1, 
+                        stroke_fill=COLORS["text"], 
+                        anchor="mm"
+                    )
+                    
+                    content_y_increment = desired_height + text_height // 8
+                else:
+                    # Add non-meal text
+                    formatted_text = self.break_line(content['text'], layout["max_text_width"], draw, font)
+                    
+                    draw.multiline_text(
+                        (center_x, content_y + (grid["cell_height"] // 4)), 
+                        formatted_text, 
+                        font=font, 
+                        fill=COLORS["text"], 
+                        align="center", 
+                        stroke_width=1, 
+                        stroke_fill=COLORS["text"], 
+                        anchor="mm"
+                    )
+                    
+                    content_y_increment = grid["cell_height"] // 3
+                    
+                # Increment y position for next content
+                content_y += layout["content_spacing"] + content_y_increment
+                
+        return img, warnings
     
-    print("Not found:", name)
-    return ("Not found:" + name, "", "")
-
-def flat(l):
-    f = []
-    for c in l:
-        f.extend(c)
-
-    return f 
-
-def uniquess(l):
-    f = []
-    for c in l:
-        if c['text'] not in [a["text"] for a in f]:
-            f.append(c)
-    return f
-
-def generate_text_for_mail(week):
-    text = "👇English translation under the picture, at the end of the email👇\nBonjour à tous !\n{text-custom-french}\n\nVoici la liste des ingrédients des plats:\n"
-
-    # Load ingredients
-    # ingredients.json is a list of tuple (name, french, english)
-    with open("ingredients.json", encoding="utf8") as f:
-        ingredients = json.load(f)
-
-    all_meal = flat([d for d in [c["content"] for c in week["content"]]])
-    all_meal_unique = uniquess(all_meal)
-
-    for content in all_meal_unique:
-        if content['is_meal']:
-            ingredient = find_ingredient(ingredients, content['text'])
-            if ingredient[0] == "Pizza":
-                continue
-            ingredient_french = ingredient[1]
-            text += f"\t- {ingredient[0]}: {ingredient_french}\n"
+    def transform_pascal_case(self, string):
+        """Transform PascalCase to space-separated words"""
+        if string == "RSAv":
+            return string
+            
+        final = [""]
+        for i in range(len(string)):
+            if string[i].isupper() and i != 0:
+                final.append("")
+            final[-1] += string[i]
+            
+        return " ".join(word.strip() for word in final)
     
-    text += "\n\n\n\n\n\n{image goes here}\n\n\n\n\n\n👇English translation👇\n\nHello everyone!\n{text-custom-english}\n\nHere is the list of ingredients of the dishes:\n"
- 
-    for content in all_meal_unique:
-            if content['is_meal']:
-                ingredient = find_ingredient(ingredients, content['text'])
+    def find_ingredient(self, ingredients, name):
+        """Find ingredient information in the ingredients list"""
+        if name.lower() == "pizza":
+            return ("Pizza", "Pizza", "Pizza")
+            
+        for ingredient in ingredients:
+            if unidecode(name.lower()) in unidecode(ingredient[0].lower()):
+                return ingredient
+                
+        print(f"Not found: {name}")
+        return (f"Not found:{name}", "", "")
+    
+    def flatten_meals(self, week_data):
+        """Flatten the nested meal structure and remove duplicates"""
+        all_meals = []
+        for day in week_data["content"]:
+            for content in day["content"]:
+                all_meals.append(content)
+                
+        # Remove duplicates based on text field
+        unique_meals = []
+        seen_texts = set()
+        for meal in all_meals:
+            if meal['text'] not in seen_texts:
+                unique_meals.append(meal)
+                seen_texts.add(meal['text'])
+                
+        return unique_meals
+    
+    def generate_email_text(self, week_data):
+        """Generate text for email with ingredient information"""
+        # Load ingredients
+        with open("ingredients.json", encoding="utf8") as f:
+            ingredients = json.load(f)
+            
+        unique_meals = self.flatten_meals(week_data)
+        
+        # Start building the email text
+        text = "👇English translation under the picture, at the end of the email👇\nBonjour à tous !\n{text-custom-french}\n\nVoici la liste des ingrédients des plats:\n"
+        
+        # Add French ingredients
+        for meal in unique_meals:
+            if meal['is_meal']:
+                ingredient = self.find_ingredient(ingredients, meal['text'])
                 if ingredient[0] == "Pizza":
                     continue
-                ingredient_english = ingredient[2]
-                text += f"\t- {ingredient[0]}: {ingredient_english}\n"
+                text += f"\t- {ingredient[0]}: {ingredient[1]}\n"
+        
+        # Add English translation
+        text += "\n\n\n\n\n\n{image goes here}\n\n\n\n\n\n👇English translation👇\n\nHello everyone!\n{text-custom-english}\n\nHere is the list of ingredients of the dishes:\n"
+        
+        # Add English ingredients
+        for meal in unique_meals:
+            if meal['is_meal']:
+                ingredient = self.find_ingredient(ingredients, meal['text'])
+                if ingredient[0] == "Pizza":
+                    continue
+                text += f"\t- {ingredient[0]}: {ingredient[2]}\n"
                 
+        text += "\n\nBar'barement vôtre,\nL'équipe Bar'bare"
+        
+        # Replace placeholders with custom text
+        return text.replace("{text-custom-french}", week_data["text-custom-french"]).replace("{text-custom-english}", week_data["text-custom-english"])
     
-    text += "\n\nBar'barement vôtre,\nL'équipe Bar'bare"
+    def generate_menu(self, week_data, filename):
+        """Generate all menu artifacts: vertical image, horizontal image, and email text"""
+        # Create vertical image
+        vertical_img = self.create_base_image("vertical")
+        vertical_img = self.draw_header(vertical_img, "vertical")
+        vertical_img = self.create_day_grid(vertical_img, week_data["header"], "vertical")
+        vertical_img, v_warnings = self.add_content(vertical_img, week_data["content"], "vertical")
+        
+        # Create horizontal image
+        horizontal_img = self.create_base_image("horizontal")
+        horizontal_img = self.draw_header(horizontal_img, "horizontal")
+        horizontal_img = self.create_day_grid(horizontal_img, week_data["header"], "horizontal")
+        horizontal_img, h_warnings = self.add_content(horizontal_img, week_data["content"], "horizontal")
+        
+        # Generate email text
+        email_text = self.generate_email_text(week_data)
+        
+        # Save outputs
+        vertical_img.save(f"{OUTPUT_DIR}/{filename}-vertical.png")
+        horizontal_img.save(f"{OUTPUT_DIR}/{filename}-horizontal.png")
+        
+        with open(f"{OUTPUT_DIR}/mail.txt", 'w', encoding="utf8") as f:
+            f.write(email_text)
+            
+        # Print any warnings
+        warnings = v_warnings + h_warnings
+        if warnings:
+            print("\n".join(warnings))
+            
+        return vertical_img, horizontal_img, email_text
 
-    return text.replace("{text-custom-french}", week["text-custom-french"]).replace("{text-custom-english}", week["text-custom-english"])
-
-
-
-
-def args_get_string(args, index):
-    string = ""
-    while not args[index].endswith("\""):
-        string += args[index] + " "
-        index += 1
-
-    string += args[index]
-    return (string[1:-1], index)
-
-
-
-
-# Proccess the command line arguments and transform them into a dictionary
-# Line arguments are:
-#  --header <list of string> 
-#  --custom-text-french <string>
-#  --custom-text-english <string>
-#  --content <list of dictionary> 
-#       --day <string>
-#       --day-content <list of dictionary> (max 2)
-#           --is-meal (true if present)
-#           --text <string>
-#           --img <string> (optional)
-#  --output <string> (optional)
-def cli_process(args):
-    week = {
-        "header": [],
-        "text-custom-french": "",
-        "text-custom-english": "",
-        "content": []
-    }
-
-    i = 0
-    while i < len(args):
-        if args[i] == "--header":
-            header = []
-            i += 1
-            while not args[i].startswith("--"):
-                header.append(args[i])
+class CLIParser:
+    def __init__(self):
+        pass
+        
+    def parse_string_argument(self, args, index):
+        """Parse a quoted string argument"""
+        string = ""
+        while index < len(args) and not args[index].endswith("\""):
+            string += args[index] + " "
+            index += 1
+            
+        if index < len(args):
+            string += args[index]
+            
+        return string[1:-1], index
+    
+    def parse_arguments(self, args):
+        """Parse command line arguments into a structured format"""
+        week_data = {
+            "header": [],
+            "text-custom-french": "",
+            "text-custom-english": "",
+            "content": []
+        }
+        
+        i = 0
+        while i < len(args):
+            if args[i] == "--header":
+                header = []
                 i += 1
-            week["header"] = header
-
-        elif args[i] == "--custom-text-french":
-            text, i = args_get_string(args, i+1)
-            i += 1
-            week["text-custom-french"] = text
-        elif args[i] == "--custom-text-english":
-            text, i = args_get_string(args, i+1)
-            i += 1
-            week["text-custom-english"] = text
-        elif args[i] == "--content":
-            day = {
-                "day": args[i+2],
-                "content": []
-            }
-            i += 3
-            if args[i] == "--day-content":
+                while i < len(args) and not args[i].startswith("--"):
+                    header.append(args[i])
+                    i += 1
+                week_data["header"] = header
+                
+            elif args[i] == "--custom-text-french":
+                text, i = self.parse_string_argument(args, i+1)
                 i += 1
-            else:
-                print("Error: --day-content is missing " + args[i])
+                week_data["text-custom-french"] = text
+                
+            elif args[i] == "--custom-text-english":
+                text, i = self.parse_string_argument(args, i+1)
                 i += 1
-                continue
-
-            while i < len(args) and args[i] != "--content":
-                content = {
-                    "text": "",
-                    "is_meal": False
+                week_data["text-custom-english"] = text
+                
+            elif args[i] == "--content":
+                day = {
+                    "day": args[i+2],
+                    "content": []
                 }
-                if args[i] == "--is-meal":
-                    content["is_meal"] = True
-                    i += 1
-                if args[i] == "--text":
-                    text, i = args_get_string(args, i+1)
-                    content["text"] = text
-                    i += 1
+                i += 3
                 
-                if i < len(args) and args[i] == "--img":
-                    content["img"] = args[i+1]
-                    i += 2
+                if args[i] == "--day-content":
+                    i += 1
+                else:
+                    print(f"Error: --day-content is missing {args[i]}")
+                    i += 1
+                    continue
+                    
+                while i < len(args) and args[i] != "--content":
+                    content = {
+                        "text": "",
+                        "is_meal": False
+                    }
+                    
+                    if args[i] == "--is-meal":
+                        content["is_meal"] = True
+                        i += 1
+                        
+                    if args[i] == "--text":
+                        text, i = self.parse_string_argument(args, i+1)
+                        content["text"] = text
+                        i += 1
+                    
+                    if i < len(args) and args[i] == "--img":
+                        content["img"] = args[i+1]
+                        i += 2
+                    
+                    day["content"].append(content)
+                    
+                week_data["content"].append(day)
+            else:
+                i += 1
                 
-                day["content"].append(content)
-                # i += 1
-            week["content"].append(day)
-        else:
-            i += 1
+        return week_data
 
-    return week
-
-
-
-
-def main_cli(week, filename):
+def generate_img_from_args(args, filename="menu"):
+    """Main entry point for generating images from command line arguments"""
+    parser = CLIParser()
+    week_data = parser.parse_arguments(args)
     
-    img = setup_img_vertical(week["header"])
-
-    img = add_content_vertical(img, week["content"])
-    if len(img[1]) > 0:
-        print("\n".join(img[1]))
-    # img[0].show()
-
-    horizontal = setup_img_horizontal(week["header"])
-    horizontal = add_content_horizontal(horizontal, week["content"])
-    # horizontal[0].show()
-
-    mail = generate_text_for_mail(week)
-
-
-    directory = "build"
-
-    # Check if the directory exists
-    if not os.path.isdir(directory):
-        # Create the directory if it does not exist
-        os.makedirs(directory)
-
-
-    img[0].save(f"build/{filename}-vertical.png")
-    horizontal[0].save(f"build/{filename}-horizontal.png")
-    with open("build/mail.txt", 'w', encoding="utf8") as f:
-        f.write(mail)
-
-def generate_img_from_args(args, filename):
-    week = cli_process(args)
-
-    main_cli(week, filename)
-
+    generator = MenuGenerator()
+    return generator.generate_menu(week_data, filename)
 
 if __name__ == "__main__":
     with open("cli.txt", encoding="utf8") as f:
-        week = cli_process(f.read().split())
-
-
-    print(week)
-
-    main_cli(week)
-
-
+        args = f.read().split()
+        
+    parser = CLIParser()
+    week_data = parser.parse_arguments(args)
     
+    print(week_data)
+    
+    generator = MenuGenerator()
+    generator.generate_menu(week_data, "menu")
